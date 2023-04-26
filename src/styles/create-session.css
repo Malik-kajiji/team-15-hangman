@@ -1,0 +1,305 @@
+.create-session {
+    min-height: 100vh;
+    background-color: #FAFDFD;
+    width: 100%;
+}
+.create-session aside {
+    position: fixed;
+    background-color: #fff;
+    height: 100vh;
+    width: 320px;
+    box-shadow: 5px 5px 5px #0000002d;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 20px;
+    padding-top: 20px;
+}
+
+.create-session aside h2 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+}
+
+.create-session aside div {
+    width: 300px;
+    height: 40px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.create-session aside div input {
+    width: 250px;
+    height: 40px;
+    border: 1px solid #344054;
+    color: #344054;
+    border-radius: 20px 0 0 20px;
+    padding:  0 20px;
+    border-right: none;
+}
+
+.create-session aside div button {
+    width: 50px;
+    height: 40px;
+    border-radius: 0 20px 20px 0;
+    border: 1px solid #344054;
+    border-left: none;
+}
+
+.create-session aside ul {
+    width: 300px;
+    height: 65vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+    /* overflow-y: scroll; */
+}
+.create-session aside ul li {
+    background-color: #215ABD;
+    color: #fff;
+    width: 300px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border-radius: 20px;
+}
+.create-session aside ul li p {
+    width: 210px;
+    overflow-x: hidden;
+    font-size: 16px;
+}
+.create-session aside ul li span {
+    display: flex;
+    cursor: pointer;
+}
+
+.create-session aside .save-btn {
+    position: absolute;
+    bottom: 70px;
+    left: 10px;
+    width: 300px;
+    height: 40px;
+    border-radius: 20px;
+}
+.create-session aside .go-back {
+    position: absolute;
+    bottom: 20px;
+    left: 10px;
+    width: 300px;
+    height: 40px;
+    border-radius: 20px;
+    color: #215ABD;
+    background-color: #fff;
+    border: 2px solid #215ABD;
+}
+.create-session aside .go-back:hover {
+    outline: 2px solid #215abd4c;
+}
+
+.create-session article {
+    position: relative;
+    left: 320px;
+    width: calc(100% - 320px);
+    min-height: 100vh;
+}
+.create-session article.hide {
+    display: none;
+}
+
+.create-session article .change-word {
+    position: absolute;
+    top: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 40px;
+    width: 400px;
+}
+
+.create-session article .change-word input {
+    width: 320px;
+    height: 40px;
+    border: 1px solid #344054;
+    color: #344054;
+    border-radius: 20px 0 0 20px;
+    padding:  0 20px;
+    border-right: none;
+}
+
+.create-session article .change-word button {
+    width: 80px;
+    height: 40px;
+    border-radius: 0 20px 20px 0;
+    border: 1px solid #344054;
+    border-left: none;
+}
+
+.create-session article .word-sittings {
+    position: absolute;
+    width: fit-content;
+    top: 180px;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 160px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 15px;
+    padding-left: 100px;
+}
+
+.create-session article .word-sittings .showen {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+    font-size: 12px;
+}
+.create-session article .word-sittings .hidden {
+    position: absolute;
+    width: 100%;
+    top: 80px;
+    left: 0;
+    font-size: 12px;
+}
+
+.create-session article .word-sittings .showen::after,
+.create-session article .word-sittings .hidden::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 0.5px;
+    background-color: #344054;
+    left: 0;
+    bottom: 0;
+}
+
+.create-session article .word-sittings .showen::before,
+.create-session article .word-sittings .hidden::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 0.5px;
+    background-color: #344054;
+    left: 0;
+    bottom: -60px;
+}
+
+
+.create-session article .word-sittings div {
+    z-index: 2;
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 20px;
+}
+
+.create-session article .word-sittings div span {
+    font-size: 20px;
+    background-color: #fff;
+    border: 1px solid #000;
+    border-radius: 8px;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: translateY(-40px);
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.create-session article .word-sittings div .hidden-letter {
+    transform: translateY(40px);
+}
+
+.note {
+    position: absolute;
+    bottom: -20px;
+    font-size: 12px;
+    left: 0;
+}
+
+.share-session {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    transform: translateY(-200%);
+    transform: 0.7s background-color, 0.7s backdrop-filter;
+}
+
+@supports (backdrop-filter: blur(0.2rem)){
+    .share-session {
+        backdrop-filter: blur(0.2rem);
+    }
+}
+
+.share-session div {
+    position: absolute;
+    top: 0%;
+    left: 50%;
+    transform: translate(-50%,-100%);
+    transition: 0.7s;
+    width: 400px;
+    height: 40px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.share-session div p {
+    background-color: #fff;
+    width: 320px;
+    height: 40px;
+    border: 1px solid #344054;
+    color: #344054;
+    border-radius: 20px 0 0 20px;
+    padding:  0 20px;
+    border-right: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.share-session div button {
+    width: 80px;
+    height: 40px;
+    border-radius: 0 20px 20px 0;
+    border: 1px solid #344054;
+    border-left: none;
+}
+
+
+.share-session .go-back {
+    transition: 0.7s transform;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%,100%);
+    width: 400px;
+    height: 40px;
+    border-radius: 20px;
+}
+
+
+.share-session.active {
+    transform: translateY(0%);
+}
+
+.share-session.active div {
+    top: 50%;
+    transform: translate(-50%,-50%);
+}
+.share-session.active .go-back {
+    transform: translate(-50%,-50%);
+}
