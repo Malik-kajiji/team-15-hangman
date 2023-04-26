@@ -27,7 +27,8 @@
 .new-game-text {
   position: absolute;
   left: 30%;
-  top: -20%;
+  top: 50%;
+  transform: translateY(-50%);
   font-family: 'Inter';
   font-style: normal;
   font-weight: 600;
@@ -38,7 +39,7 @@
 .play-friends-text {
   position: absolute;
   left: 30%;
-  top: 32%;
+  top: 38%;
   font-family: 'Inter';
   font-style: normal;
   font-weight: 600;
@@ -46,17 +47,17 @@
   color: #FFFFFF;  
 }
 
-.create-session {
+.create-session1 {
   position: absolute;
   width: 30%;
-  height: 7%;
+  height: 50px;
   left: 22.5%;
   top: 43%;
   background: #215ABD;
   border-radius: 30px;
 }
 
-.create-session:hover {
+.create-session1:hover {
   cursor: pointer;
   background-color: #346ac8;
 }
@@ -64,7 +65,8 @@
 .create-session-text {
   position: absolute;
   left: 30%;
-  top: -20%;
+  top: 50%;
+  transform: translateY(-50%);
   font-family: 'Inter';
   font-style: normal;
   font-weight: 600;
@@ -74,8 +76,8 @@
 
 .session-input {
   position: absolute;
-  width: 23.2%;
-  height: 6.7%;
+  width: 25%;
+  height: 7%;
   left: 22.5%;
   top: 54%;
   background: #FFFFFF;
@@ -101,9 +103,9 @@
 
 .session-join {
   position: absolute;
-  width: 5.5%;
+  width: 5%;
   height: 7%;
-  left: 47%;
+  left: 47.5%;
   top: 54%;
   background: #215ABD;
   border-radius: 0px 30px 30px 0px;
@@ -117,7 +119,8 @@
 .session-join-text {
   position: absolute;
   left: 18%;
-  top: -21%;
+  top: 50%;
+  transform: translateY(-50%);
   font-family: 'Inter';
   font-style: normal;
   font-weight: 600;
@@ -128,21 +131,28 @@
 .leaderboard {
   position: absolute;
   width: 25%;
-  height: 100%;
+  height: 100vh;
   right: 0px;
   top: 0px;
   background: rgba(255, 255, 255, 0.8);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
 }
 
 .leaderboard-header {
-  height: 100px;
+  position: relative;
+  height: 60px;
   width: 100%;
 }
 
 .leaderboard-text {
   position: absolute;
   left: 29%;
-  top: -1%;
+  top: 50%;
+  transform: translateY(-50%);
   font-family: 'Poppins';
   font-style: normal;
   font-weight: 600;
@@ -150,40 +160,28 @@
   color: #000000;
 }
 
-.user-1, .user-2, .user-3, .user-4, .user-5,
-.user-6, .user-7, .user-8, .user-9, .user-10 {
-  position: absolute;
-  width: 95%;
-  height: 5%;
-  left: 2.5%;
+.leaderboard .user {
+  position: relative;
+  width: 320px;
+  height: 40px;
   background: #344054;
-  border-radius: 25px;
+  border-radius: 20px;
 }
-
-.user-1 {top: 10%;}
-.user-2 {top: 17.5%;}
-.user-3 {top: 25%;}
-.user-4 {top: 32.5%;}
-.user-5 {top: 40%;}
-.user-6 {top: 47.5%;}
-.user-7 {top: 55%;}
-.user-8 {top: 62.5%;}
-.user-9 {top: 70%;}
-.user-10 {top: 77.5%;}
 
 .placement-background {
   position: absolute;
-  width: 10%;
-  height: 100%;
+  width: 40px;
+  height: 40px;
   left: -0.5px;
-  border-radius: 25px;
+  border-radius: 20px;
   background: white;
 }
 
 .placement-text {
   position: absolute;
-  left: 13%;
-  top: -30%;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
   font-family: 'Poppins';
   font-style: normal;
   font-weight: 600;
@@ -193,8 +191,9 @@
 
 .username-text {
   position: absolute;
-  left: 12%;
-  top: -32.5%;
+  left: 45px;
+  top: 50%;
+  transform: translateY(-50%);
   font-family: 'Inter';
   font-style: normal;
   font-weight: 600;
@@ -204,8 +203,9 @@
 
 .score-text {
   position: absolute;
-  right: 3%;
-  top: -30%;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
   font-family: 'Inter';
   font-style: normal;
   font-weight: 600;
@@ -231,7 +231,8 @@
 .logged-in-user .user-text {
   position: absolute;
   left: 7%;
-  top: -10%;
+  top: 50%;
+  transform: translateY(-75%);
   font-family: 'Inter';
   font-style: normal;
   font-weight: 600;
@@ -242,7 +243,8 @@
 .logged-in-user .user-email {
   position: absolute;
   left: 7%;
-  top: 25%;
+  top: 50%;
+  transform: translateY(-0%);
   font-family: 'Inter';
   font-style: normal;
   font-weight: 300;
@@ -253,6 +255,8 @@
 .logged-in-user .logout-icon {
   position: absolute;
   right: 3%;
-  top: 10%;
-  scale: 0.7;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 20px;
+  display: flex;
 }
