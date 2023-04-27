@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import '../styles/game-play.css';
 
-const Gameplay = () => {
-    return (
-        <div>Gameplay</div>
-    )
-}
+const wordList = ['react', 'javascript', 'html', 'css', 'nodejs', 'mongodb'];
+const MAX_GUESSES = 11;
 
-export default Gameplay
+const Hangman = () => {
+        return (
+        )
+    }
+
+export default Hangman;
