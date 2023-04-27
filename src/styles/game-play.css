@@ -4,3 +4,12 @@
   top: 200px;
   white-space: nowrap;
 }
+
+.display-char {
+  margin: 0 5px;
+  border: 1px solid #344054;
+  border-radius: 8px;
+  padding: 20px 40px;
+  font-size: 40px;
+  margin: 10px;
+}
