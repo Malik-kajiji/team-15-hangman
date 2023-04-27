@@ -1,0 +1,6 @@
+.display-word {
+  position: absolute;
+  left: 600px;
+  top: 200px;
+  white-space: nowrap;
+}
