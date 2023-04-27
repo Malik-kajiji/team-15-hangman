@@ -43,3 +43,112 @@
   background-color: rgba(231, 76, 60, 0.44) !important;
   cursor: default !important;
 }
+
+.hangman {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 1024px;
+  width: 500px;
+}
+
+.hangman-piece {
+  position: fixed;
+}
+
+.platform {
+  top: 781px;
+  left: 270px;
+  width: 2px;
+  height: 500px;
+  transform: translate(-50%, -50%) rotate(90deg);
+  transition: border-color 0.3s ease;
+}
+
+.stand {
+  top: 409px;
+  left: 89px;
+  width: 2px;
+  height: 745px;
+  transform: translate(-50%, -50%);
+}
+
+.top {
+  top: 37px;
+  left: 194.5px;
+  width: 2px;
+  height: 213px;
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.rope-top {
+  top: 100px;
+  left: 300px;
+  width: 2px;
+  height: 124px;
+  transform: translate(-50%, -50%);
+}
+
+.rope-head {
+  top: 230px;
+  left: 300px;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(255, 255, 255, 0);
+}
+
+.head {
+  top: 230px;
+  left: 300px;
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(255, 255, 255, 0);
+}
+
+.body {
+  top: 465px;
+  left: 300px;
+  width: 2px;
+  height: 330px;
+  transform: translate(-50%, -50%);
+}
+
+.left-arm {
+  top: 330px;
+  left: 390px;
+  width: 140px;
+  height: 2px;
+  transform: translate(-150%, -50%) rotate(45deg);
+}
+
+.right-arm {
+  top: 330px;
+  left: 210px;
+  width: 140px;
+  height: 2px;
+  transform: translate(50%, -50%) rotate(-45deg);
+}
+
+.left-leg {
+  top: 679px;
+  left: 390px;
+  width: 140px;
+  height: 2px;
+  transform: translate(-150%, -50%) rotate(-45deg);
+}
+
+.right-leg {
+  top: 679px;
+  left: 210px;
+  width: 140px;
+  height: 2px;
+  transform: translate(50%, -50%) rotate(45deg);
+}
+
+.hangman-piece.show {
+  background-color: #344054;
+} 
