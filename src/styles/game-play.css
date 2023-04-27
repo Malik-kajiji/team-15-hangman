@@ -13,3 +13,33 @@
   font-size: 40px;
   margin: 10px;
 }
+
+.alphabet {
+  position: absolute;
+  left: 600px;
+  top: 400px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 885px;
+}
+
+.alphabet-btn {
+  margin: 5px;
+  padding: 15px 20px;
+  border: 1px solid black;
+  border-radius: 5px;
+  background-color: white;
+  font-size: 20px;
+  font-weight: normal;
+  transition: background-color 0.3s ease;
+}
+
+.alphabet-btn:hover {
+  background-color: #eee;
+}
+
+.disabled {
+  background-color: rgba(231, 76, 60, 0.44) !important;
+  cursor: default !important;
+}
