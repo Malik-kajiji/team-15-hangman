@@ -10,18 +10,23 @@ import '../styles/account.css';
 
 const Account = () => {
     return (
-        <Router>
-
-            <Routes>
-                <Route 
-                path='/' 
-                element={<Login />}/>
-                <Route 
-                    path='/signup' 
-                    element={<SignUp />}
-                />
-            </Routes>
-        </Router>
+        <main className='main'>
+            <Router>
+                <div className='logo'>
+                    <p>Hangman</p>
+                    <span>Game</span>
+                </div>
+                <Routes>
+                    <Route 
+                    path='/' 
+                    element={<Login />}/>
+                    <Route 
+                        path='/signup' 
+                        element={<SignUp />}
+                    />
+                </Routes>
+            </Router>
+        </main>
     )
 }
 

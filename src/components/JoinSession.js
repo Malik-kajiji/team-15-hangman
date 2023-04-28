@@ -1,12 +1,19 @@
 import React, { useState, useEffect } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import '../styles/game-play.css';
 import { AiOutlineCheck,AiOutlineClose } from 'react-icons/ai';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
-import { auth, db } from '../config/firebaseConfig';
+import { doc,getDoc } from 'firebase/firestore';
+import { db } from '../config/firebaseConfig';
+import { AlertData } from '../context/AlertContext';
 
 const MAX_GUESSES = 11;
 
-const Hangman = ({isGameStarted , setIsGameStarted,leaderboard}) => {
+const JoinSession = () => {
+    const { setAlertData } = AlertData()
+    const { uid } = useParams();
+    const [currentWord,setCurrentWord] = useState(0);
+    const [data,setData] = useState([]);
+    const [isDataFetched,setIsDataFetched] = useState(false);
     const [guessesLeft, setGuessesLeft] = useState(MAX_GUESSES);
     const [currentChar,setCurrentChar] = useState(0);
     const [gameState, setGameState] = useState('playing');
@@ -24,43 +31,31 @@ const Hangman = ({isGameStarted , setIsGameStarted,leaderboard}) => {
             ]
         }
     )
-
-
     function setNewWord(){
-        fetch('https://random-word-api.herokuapp.com/word')
-        .then(res=>res.json())
-        .then(data => {
-            if(data[0].length > 12){
-                setNewWord()
-            }else {
-                const word = data[0];
-                console.log('##########################')
-                console.log(`the answer is: ${word}`)
-                console.log('I have logged the answer to the console for testing the game :)')
-                console.log('##########################')
-                //
-                let wordSrt = word;
-                //
-                let wordChars = [];
-                for(let i=0;i<word.length;i++) wordChars.push(word[i])
-                let randomIndex1 = Math.floor(Math.random() * word.length)
-                let randomIndex2 = Math.floor(Math.random() * word.length)
-                //
-                let visibility = Array(wordChars.length).fill(false);
-                visibility[randomIndex1] = true;
-                visibility[randomIndex2] = true;
-                //
-                let wordSuggs = [];
-                for(let i=0;i<word.length;i++){
-                    const suggsArray = createSuggs(word[i]);
-                    wordSuggs.push(suggsArray)
-                }
-                //
-                let wordSuggsState = Array(wordChars.length).fill(Array(wordSuggs[0].length).fill(null));
-                setWordData({wordSrt,wordChars,wordSuggs,wordSuggsState,visibility})
-                setCurrentChar(0)
+        if(currentWord < data.length){
+            const word = data[currentWord];
+            console.log('##########################')
+            console.log(`the answer is: ${word.wordStr}`)
+            console.log('I have logged the answer to the console for testing the game :)')
+            console.log('##########################')
+            //
+            let wordSrt = word.wordStr;
+            //
+            let wordChars = word.word;
+            //
+            let visibility = word.visibility;
+            //
+            let wordSuggs = [];
+            for(let i=0;i<wordChars.length;i++){
+                const suggsArray = createSuggs(wordChars[i]);
+                wordSuggs.push(suggsArray)
             }
-        })
+            //
+            let wordSuggsState = Array(wordChars.length).fill(Array(wordSuggs[0].length).fill(null));
+            setWordData({wordSrt,wordChars,wordSuggs,wordSuggsState,visibility})
+            setCurrentChar(0)
+        }
+        setCurrentWord(prev => prev + 1)
     }
 
     function createSuggs(mustInclude){
@@ -98,7 +93,6 @@ const Hangman = ({isGameStarted , setIsGameStarted,leaderboard}) => {
         setWordData(prev => {
             let newArr = [...prev.wordSuggsState[currentChar]];
             newArr[index] = wordData.wordChars[currentChar] === letter
-
             let wordSuggsState = [...prev.wordSuggsState]
             wordSuggsState[currentChar] = newArr
             return {...prev,wordSuggsState}
@@ -123,38 +117,50 @@ const Hangman = ({isGameStarted , setIsGameStarted,leaderboard}) => {
     };
     useEffect(()=>{
         if (guessesLeft === 0) {
+            setCurrentWord(0);
             setGameState('lost');
-            if(leaderboard.length < 10){
-                let newArr = [...leaderboard];
-                newArr.push({username:auth.currentUser.displayName,score:currentScore});
-                newArr = newArr.sort((a, b) => a.score < b.score? 1 : -1);
-                const Ref = doc(db,'leaderboard','leaderboard')
-                setDoc(Ref,{topTen:newArr})
-            }else {
-                if(leaderboard[10].score < currentScore){
-                    let newArr = [...leaderboard];
-                    leaderboard[10] = {username:auth.currentUser.displayName,score:currentScore};
-                    newArr = newArr.sort((a, b) => a.score < b.score? 1 : -1);
-                    const Ref = doc(db,'leaderboard','leaderboard')
-                    setDoc(Ref,{topTen:newArr})
-                }
-            }
         }
     },[guessesLeft])
+
+    useEffect(()=>{
+        if(currentWord === data.length + 1 ){
+            setGameState('won')
+        }
+    },[currentWord])
 
     const handleRestart = () => {
         setGameState('playing');
         setGuessesLeft(MAX_GUESSES);
         setNewWord();
         setCurrentScore(0);
-        setIsGameStarted(false)
     };
 
+
     useEffect(()=>{
-        setNewWord()
+        const ref = doc(db,'sessions',uid);
+        getDoc(ref)
+        .then((res)=>{
+            setData(res.data().allwords);
+            setIsDataFetched(true);
+        })
+        .catch((err)=>{
+            setAlertData({type:'error',showen:true,msg:err.message});
+        })
     },[])
+
+    useEffect(()=>{
+        if(isDataFetched){
+            setNewWord()
+        }
+    },[isDataFetched])
+
+    useEffect(()=>{
+        if(gameState !== 'playing'){
+            setCurrentWord(0);
+        }
+    },[gameState])
     return (
-    <div className="hangman-game">
+        <div className="hangman-game">
         <>
             {gameState === 'playing'?
                 <div className="game-play">
@@ -191,31 +197,65 @@ const Hangman = ({isGameStarted , setIsGameStarted,leaderboard}) => {
                     ))}
                     </div>
                     <div className="hangman">
-                        <div className={`hangman-piece platform ${guessesLeft < 11 || !isGameStarted ? 'show' : ''}`}></div>
-                        <div className={`hangman-piece stand ${guessesLeft < 10 || !isGameStarted ? 'show' : ''}`}></div>
-                        <div className={`hangman-piece top ${guessesLeft < 9 || !isGameStarted ? 'show' : ''}`}></div>
-                        <div className={`hangman-piece rope-top ${guessesLeft < 8 || !isGameStarted ? 'show' : ''}`}></div>
-                        <div className={`hangman-piece rope-head ${guessesLeft < 7 || !isGameStarted ? 'show' : ''}`}></div>
-                        <div className={`hangman-piece head ${guessesLeft < 6 || !isGameStarted ? 'show' : ''}`}></div>
-                        <div className={`hangman-piece body ${guessesLeft < 5 || !isGameStarted ? 'show' : ''}`}></div>
-                        <div className={`hangman-piece left-arm ${guessesLeft < 4 || !isGameStarted ? 'show' : ''}`}></div>
-                        <div className={`hangman-piece right-arm ${guessesLeft < 3 || !isGameStarted ? 'show' : ''}`}></div>
-                        <div className={`hangman-piece left-leg ${guessesLeft < 2 || !isGameStarted ? 'show' : ''}`}></div>
-                        <div className={`hangman-piece right-leg ${guessesLeft < 1 || !isGameStarted ? 'show' : ''}`}></div>
+                        <div className={`hangman-piece platform ${guessesLeft < 11  ? 'show' : ''}`}></div>
+                        <div className={`hangman-piece stand ${guessesLeft < 10  ? 'show' : ''}`}></div>
+                        <div className={`hangman-piece top ${guessesLeft < 9  ? 'show' : ''}`}></div>
+                        <div className={`hangman-piece rope-top ${guessesLeft < 8  ? 'show' : ''}`}></div>
+                        <div className={`hangman-piece rope-head ${guessesLeft < 7  ? 'show' : ''}`}></div>
+                        <div className={`hangman-piece head ${guessesLeft < 6  ? 'show' : ''}`}></div>
+                        <div className={`hangman-piece body ${guessesLeft < 5 ? 'show' : ''}`}></div>
+                        <div className={`hangman-piece left-arm ${guessesLeft < 4  ? 'show' : ''}`}></div>
+                        <div className={`hangman-piece right-arm ${guessesLeft < 3  ? 'show' : ''}`}></div>
+                        <div className={`hangman-piece left-leg ${guessesLeft < 2  ? 'show' : ''}`}></div>
+                        <div className={`hangman-piece right-leg ${guessesLeft < 1  ? 'show' : ''}`}></div>
                     </div>
                 </div>
             :
-            <div className="game-over">
-                <div className="game-over-message">game over</div>
-                <div className='game-over-score-container'>
-                    <div className="game-over-score-text">your score is</div>
-                    <div className="game-over-score">{`${currentScore}`}</div>
+            <>
+            {gameState === 'won'?
+                <div className="game-over">
+                    <div className="game-over-message">congrats you won</div>
+                    <div className='game-over-score-container'>
+                        <div className="game-over-score-text">your score is</div>
+                        <div className="game-over-score">{`${currentScore}`}</div>
+                    </div>
+                    <button className="game-over-restart" onClick={handleRestart}>play again</button>
+                    <Link to='/'>
+                        <button className="game-over-go-back" >go back to home page</button>
+                    </Link>
                 </div>
-                <button className="game-over-restart" onClick={handleRestart}>continue</button>
-            </div>
+            :
+                <div className="game-over">
+                    <div className="game-over-message">game over</div>
+                    <div className='game-over-score-container'>
+                        <div className="game-over-score-text">your score is</div>
+                        <div className="game-over-score">{`${currentScore}`}</div>
+                    </div>
+                    <button className="game-over-restart" onClick={handleRestart}>play again</button>
+                    <Link to='/'>
+                        <button className="game-over-go-back" >go back to home page</button>
+                    </Link>
+                </div>
+            }
+            </>
             }  
         </>
     </div>
-    );};
+    )
+}
 
-export default Hangman;
+export default JoinSession
+
+
+
+
+// const Hangman = ({isGameStarted , setIsGameStarted}) => {
+
+
+
+
+//     return (
+
+//     );};
+
+// export default Hangman;

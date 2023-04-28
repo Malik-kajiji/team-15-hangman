@@ -5,6 +5,7 @@ import { AlertData } from '../context/AlertContext';
 import { uid } from 'uid';
 import { db } from '../config/firebaseConfig';
 import { doc,setDoc } from 'firebase/firestore';
+import { Link } from 'react-router-dom';
 
 const CreateSession = () => {
     const { setAlertData } = AlertData();
@@ -139,33 +140,6 @@ const CreateSession = () => {
         }
     }
 
-    function createSuggs(mustInclude){
-        let allLetters = 'abcdefghijklmnopqrstuvwxyz';
-        let suggsArray = [];
-        let randomIndex = Math.floor(Math.random() * 6);
-        let counter = 0;
-
-        while(counter < 6){
-            if(counter === randomIndex){
-                suggsArray.push(mustInclude);
-                counter++;
-            } else {
-                let isExist = false;
-                let random = Math.floor(Math.random() * allLetters.length);
-                for(let i = 0; i < suggsArray.length && !isExist ; i++){
-                    if(suggsArray[i] === allLetters[random]){
-                        isExist = true;
-                    }
-                }
-                if(!isExist){
-                    suggsArray.push(allLetters[random])
-                    counter++;
-                }
-            }
-        }
-        return suggsArray;
-    }
-
     function handleShare(){
         if(words.length < 1){
             setAlertData({type:'warrning',showen:true,msg:'there should be at least 1 word'})
@@ -215,9 +189,11 @@ const CreateSession = () => {
                 <button className='save-btn Btn' onClick={handleShare}>
                     save & share
                 </button>
-                <button className='go-back '>
-                    Go Back To Home Page
-                </button>
+                <Link to='/'>
+                    <button className='go-back '>
+                        Go Back To Home Page
+                    </button>
+                </Link>
             </aside>
             <article className={current === null? 'hide' : ''}>
                 <div className='change-word'>
@@ -256,9 +232,11 @@ const CreateSession = () => {
                     <p>{sessionCode}</p>
                     <button className='Btn' onClick={handleCopy}>{isCopied? 'copied': 'copy'}</button>
                 </div>
-                <button className='go-back Btn'>
-                    go back to home page
-                </button>
+                <Link to='/'>
+                    <button className='go-back Btn'>
+                        go back to home page
+                    </button>
+                </Link>
             </div>
         </section>
     )
